@@ -44,12 +44,9 @@ function Leaderboard() {
   const [selectedEntry, setSelectedEntry] = useState(null);
 
   const endpoint = useMemo(() => {
-    const codespace = process.env.REACT_APP_CODESPACE_NAME;
-    const baseUrl = codespace
-      ? `https://${codespace}-8000.app.github.dev/api`
-      : 'http://localhost:8000/api';
-
-    return `${baseUrl}/leaderboard/`;
+    const codespaceEndpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`;
+    const localEndpoint = 'http://localhost:8000/api/leaderboard/';
+    return process.env.REACT_APP_CODESPACE_NAME ? codespaceEndpoint : localEndpoint;
   }, []);
 
   const fetchLeaderboard = useCallback(async () => {

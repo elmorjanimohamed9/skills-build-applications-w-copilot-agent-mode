@@ -37,7 +37,11 @@ function Teams() {
     return codespace ? `https://${codespace}-8000.app.github.dev/api` : 'http://localhost:8000/api';
   }, []);
 
-  const endpoint = `${baseApi}/teams/`;
+  const endpoint = useMemo(() => {
+    const codespaceEndpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams/`;
+    const localEndpoint = 'http://localhost:8000/api/teams/';
+    return process.env.REACT_APP_CODESPACE_NAME ? codespaceEndpoint : localEndpoint;
+  }, []);
 
   const fetchData = useCallback(async () => {
     try {

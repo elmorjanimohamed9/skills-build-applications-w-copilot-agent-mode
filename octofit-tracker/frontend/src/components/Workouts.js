@@ -42,12 +42,9 @@ function Workouts() {
   const [query, setQuery] = useState('');
 
   const endpoint = useMemo(() => {
-    const codespace = process.env.REACT_APP_CODESPACE_NAME;
-    const baseUrl = codespace
-      ? `https://${codespace}-8000.app.github.dev/api`
-      : 'http://localhost:8000/api';
-
-    return `${baseUrl}/workouts/`;
+    const codespaceEndpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`;
+    const localEndpoint = 'http://localhost:8000/api/workouts/';
+    return process.env.REACT_APP_CODESPACE_NAME ? codespaceEndpoint : localEndpoint;
   }, []);
 
   const fetchWorkouts = useCallback(async () => {

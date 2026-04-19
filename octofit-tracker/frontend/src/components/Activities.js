@@ -81,12 +81,9 @@ function Activities() {
   const [activeType, setActiveType] = useState('All');
 
   const endpoint = useMemo(() => {
-    const codespace = process.env.REACT_APP_CODESPACE_NAME;
-    const baseUrl = codespace
-      ? `https://${codespace}-8000.app.github.dev/api`
-      : 'http://localhost:8000/api';
-
-    return `${baseUrl}/activities/`;
+    const codespaceEndpoint = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/activities/`;
+    const localEndpoint = 'http://localhost:8000/api/activities/';
+    return process.env.REACT_APP_CODESPACE_NAME ? codespaceEndpoint : localEndpoint;
   }, []);
 
   const fetchActivities = useCallback(async () => {
